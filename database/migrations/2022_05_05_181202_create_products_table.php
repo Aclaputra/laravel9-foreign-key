@@ -17,8 +17,20 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('price');
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
+
+            /** first way / option
+             * unsignedBigInteger()
+             * foreign('category_id')->references('id')->on('categories')
+             */
+
+            // $table->unsignedBigInteger('category_id');
+            // $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
+
+            /** second way / option
+             * we can specify table name by writing it in ->constrained('<table name>')
+             */
+            
+            $table->foreignId('category_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
